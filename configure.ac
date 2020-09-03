@@ -39,6 +39,8 @@ AC_ARG_ENABLE([compare], AS_HELP_STRING([--enable-compare],
     [enable compare program (requires libpng) @<:@default=no@:>@]))
 AC_ARG_ENABLE([profile], AS_HELP_STRING([--enable-profile],
     [enable profiling program @<:@default=no@:>@]))
+AC_ARG_ENABLE([fuzz], AS_HELP_STRING([--enable-fuzz],
+    [enable fuzzing consumer program @<:@default=no@:>@]))
 AC_ARG_ENABLE([fontconfig], AS_HELP_STRING([--disable-fontconfig],
     [disable fontconfig support @<:@default=enabled@:>@]))
 AC_ARG_ENABLE([directwrite], AS_HELP_STRING([--disable-directwrite],
@@ -232,6 +234,8 @@ AM_CONDITIONAL([ENABLE_COMPARE], [test x$enable_compare = xyes && test x$libpng 
 
 AM_CONDITIONAL([ENABLE_PROFILE], [test x$enable_profile = xyes])
 
+AM_CONDITIONAL([ENABLE_FUZZ], [test x$enable_fuzz = xyes])
+
 # add packages to pkg-config for static linking
 if test "$use_libiconv" = true; then
     AC_DEFINE(CONFIG_ICONV, 1, [use iconv])
@@ -268,5 +272,5 @@ AC_SUBST([PKG_REQUIRES_PRIVATE], [$(test x$enable_shared = xno || echo ${pkg_req
 # Setup output beautifier.
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-AC_CONFIG_FILES([Makefile libass/Makefile test/Makefile compare/Makefile profile/Makefile libass.pc])
+AC_CONFIG_FILES([Makefile libass/Makefile test/Makefile compare/Makefile profile/Makefile fuzz/Makefile libass.pc])
 AC_OUTPUT
