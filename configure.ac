@@ -105,7 +105,9 @@ AS_IF([test "x$enable_libunibreak" != xno], [
         LIBS="$LIBS $LIBUNIBREAK_LIBS"
         AC_DEFINE(CONFIG_UNIBREAK, 1, [found libunibreak via pkg-config])
     ], [
-        : dnl# Don't fail if unibreak is not present
+        AS_IF([test "x$enable_libunibreak" = xyes], [
+            AC_MSG_ERROR([Couldn't locate libunibreak required for requested feature.])
+        ])
     ])
 ])
 
@@ -120,6 +122,9 @@ AS_IF([test "x$enable_fontconfig" != xno], [
         fontconfig=true
     ], [
         fontconfig=false
+        AS_IF([test "x$enable_fontconfig" = xyes], [
+            AC_MSG_ERROR([Couldn't locate fontconfig required for requested feature.])
+        ])
     ])
 ])
 
@@ -153,6 +158,9 @@ AS_IF([test "x$enable_coretext" != xno], [
         ], [
             coretext=false
             AC_MSG_RESULT([no])
+            AS_IF([test "x$enable_coretext" = xyes], [
+                AC_MSG_ERROR([Couldn't locate CoreText required for requested feature.])
+            ])
         ])
     ])
 ])
@@ -170,6 +178,9 @@ AS_IF([test "x$enable_directwrite" != xno], [
     ], [
         directwrite=false
         AC_MSG_RESULT([no])
+        AS_IF([test "x$enable_directwrite" = xyes], [
+            AC_MSG_ERROR([Couldn't locate DirectWrite required for requested feature.])
+        ])
     ])
 ])
 
