@@ -51,6 +51,12 @@ AC_ARG_VAR([FUZZ_CPPFLAGS],
 FUZZ_CPPFLAGS="${FUZZ_CPPFLAGS:--DASS_FUZZMODE=0}"
 
 # Configure Compiler
+## C Standard Version
+CFLAGS="$CFLAGS -std=gnu99"
+
+## Interface extensions
+AX_APPEND_COMPILE_FLAGS([-D_GNU_SOURCE])
+
 ## Perf tuning features
 AX_APPEND_COMPILE_FLAGS([-fno-math-errno])
 AX_APPEND_COMPILE_FLAGS([/clang:-fno-math-errno])
