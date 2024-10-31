@@ -42,6 +42,14 @@ AC_ARG_ENABLE([asm], AS_HELP_STRING([--disable-asm],
 AC_ARG_ENABLE([large-tiles], AS_HELP_STRING([--enable-large-tiles],
     [use larger tiles in the rasterizer (better performance, slightly worse quality) @<:@default=disabled@:>@]))
 
+AC_ARG_VAR([LIBASS_CFEATURES],
+    [Compiler flags used to enable additional API features beyond ISO C. Intended for development purposes.])
+## (We want to optionally use mostly POSIX, but also some additional interfaces,
+##  but defining _POSIX_C_SOURCE unfortunately may end up hiding additional non-POSIX
+##  extensions even with further feature macros also set. However, POSIX interfaces
+##  are usually implicitly enabled with the other feature macros, thus omit the POSIX one)
+LIBASS_CFEATURES="${LIBASS_CFEATURES:--D_GNU_SOURCE -D_XPLATFORM_SOURCE}"
+
 AC_ARG_VAR([ART_SAMPLES],
     [Path to the root of libass' regression testing sample repository. If set, it is used in make check.])
 AC_ARG_VAR([FUZZ_LDFLAGS],
@@ -55,11 +63,7 @@ FUZZ_CPPFLAGS="${FUZZ_CPPFLAGS:--DASS_FUZZMODE=0}"
 CFLAGS="$CFLAGS -std=gnu99"
 
 ## Interface extensions
-## (We want to optionally use mostly POSIX, but also some additional interfaces,
-##  but defining _POSIX_C_SOURCE unfortunately may end up hiding additional non-POSIX
-##  extensions even with further feature macros also set. However, POSIX interfaces
-##  are usually implicitly enabled with the other feature macros, thus omit the POSIX one)
-AX_APPEND_COMPILE_FLAGS([-D_GNU_SOURCE -D_XPLATFORM_SOURCE])
+AX_APPEND_COMPILE_FLAGS([$LIBASS_CFEATURES])
 
 ## Perf tuning features
 AX_APPEND_COMPILE_FLAGS([-fno-math-errno])
