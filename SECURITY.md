@@ -68,3 +68,6 @@ Regardless of how you choose to contact us,
 please make sure to include details of what the bug is,
 why you believe it to be security relevant and
 how to trigger it with at least one reproducer test input.
+
+If you wish to immediately also propose a patch with a fix,
+make sure to check out the hints in our `CONTRIBUTING.md` file.
